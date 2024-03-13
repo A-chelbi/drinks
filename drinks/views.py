@@ -8,7 +8,7 @@ from rest_framework import status
 
 
 @api_view(['GET', 'POST'])
-def drink_list(request):
+def drink_list(request, format=None):
     # Get all the drinks
     # serialize them
     # return json
@@ -16,7 +16,7 @@ def drink_list(request):
     if request.method == 'GET':
         drinks = Drink.objects.all()
         serializer = DrinksSerializer(drinks, many=True)
-        return JsonResponse({'drinks': serializer.data})
+        return Response(serializer.data)
 
     if request.method == 'POST':
         serializer = DrinksSerializer(data=request.data)
@@ -26,7 +26,7 @@ def drink_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def drink_detail(request, id):
+def drink_detail(request, id, format=None):
 
     try:
         # pk : primary key
